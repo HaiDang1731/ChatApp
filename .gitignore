@@ -1,0 +1,81 @@
+# =====================
+# .NET / ASP.NET Core
+# =====================
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+buidlog/
+
+# NuGet
+*.nupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+
+# Visual Studio
+.vs/
+*.csproj.user
+launchSettings.json
+
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
+
+# =====================
+# Node.js / React (ChatWeb)
+# =====================
+node_modules/
+dist/
+dist-ssr/
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =====================
+# IDE / Editor
+# =====================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# =====================
+# OS Files
+# =====================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =====================
+# Uploads (user uploaded files)
+# =====================
+wwwroot/uploads/
+
+# =====================
+# Logs
+# =====================
+*.log
+build.log
+build_errors.txt
+
+# =====================
+# Secrets / Sensitive (QUAN TRỌNG!)
+# =====================
+appsettings.Production.json
+*.pfx
+*.key
+*.pem
