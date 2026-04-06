@@ -12,6 +12,7 @@ namespace ChatAPI.Hubs
     {
         private readonly IChatService _chatService;
         private readonly IUserRepository _userRepository;
+<<<<<<< HEAD
         private readonly IFriendshipService _friendshipService;
         private readonly IConversationRepository _conversationRepository;
 
@@ -21,6 +22,13 @@ namespace ChatAPI.Hubs
             _userRepository = userRepository;
             _friendshipService = friendshipService;
             _conversationRepository = conversationRepository;
+=======
+
+        public ChatHub(IChatService chatService, IUserRepository userRepository)
+        {
+            _chatService = chatService;
+            _userRepository = userRepository;
+>>>>>>> 776a671ba98a0f6128fc16be630f40bec2eaed64
         }
 
         public override async Task OnConnectedAsync()
@@ -51,6 +59,7 @@ namespace ChatAPI.Hubs
             var senderId = Context.User?.FindFirstValue(ClaimTypes.NameIdentifier);
             if (senderId == null) return;
 
+<<<<<<< HEAD
             // Kiểm tra quan hệ bạn bè nếu là tin nhắn direct
             var conversation = await _conversationRepository.GetByIdAsync(dto.ConversationId);
             if (conversation != null && conversation.Type == "direct")
@@ -67,6 +76,8 @@ namespace ChatAPI.Hubs
                 }
             }
 
+=======
+>>>>>>> 776a671ba98a0f6128fc16be630f40bec2eaed64
             var savedMessage = await _chatService.ProcessMessageAsync(dto, senderId);
             var receiverIds = await _chatService.GetConversationMemberIdsAsync(dto.ConversationId);
 

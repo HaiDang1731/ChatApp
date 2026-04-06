@@ -9,9 +9,12 @@ class ChatService {
   private reactionRemovedCallbacks: ((convId: string, messageId: string, userId: string, emoji: string) => void)[] = [];
   private revokeCallbacks: ((convId: string, messageId: string) => void)[] = [];
   private userProfileUpdatedCallbacks: ((userId: string, displayName: string, avatarUrl?: string) => void)[] = [];
+<<<<<<< HEAD
   private friendRequestReceivedCallbacks: ((userId: string) => void)[] = [];
   private friendRequestAcceptedCallbacks: ((userId: string) => void)[] = [];
   private groupAddedCallbacks: ((convId: string) => void)[] = [];
+=======
+>>>>>>> 776a671ba98a0f6128fc16be630f40bec2eaed64
 
   public async startConnection(token: string) {
     if (this.connection) return;
@@ -51,6 +54,7 @@ class ChatService {
       this.userProfileUpdatedCallbacks.forEach(cb => cb(userId, displayName, avatarUrl));
     });
 
+<<<<<<< HEAD
     this.connection.on("FriendRequestReceived", (userId) => {
       this.friendRequestReceivedCallbacks.forEach(cb => cb(userId));
     });
@@ -67,6 +71,8 @@ class ChatService {
         alert(message); // Simple alert for now
     });
 
+=======
+>>>>>>> 776a671ba98a0f6128fc16be630f40bec2eaed64
     try {
       await this.connection.start();
       console.log("SignalR Connected");
@@ -143,6 +149,7 @@ class ChatService {
   public onUserProfileUpdated(callback: (userId: string, displayName: string, avatarUrl?: string) => void) { this.userProfileUpdatedCallbacks.push(callback); }
   public offUserProfileUpdated(callback: (userId: string, displayName: string, avatarUrl?: string) => void) { this.userProfileUpdatedCallbacks = this.userProfileUpdatedCallbacks.filter(c => c !== callback); }
 
+<<<<<<< HEAD
   public onFriendRequestReceived(callback: (userId: string) => void) { this.friendRequestReceivedCallbacks.push(callback); }
   public offFriendRequestReceived(callback: (userId: string) => void) { this.friendRequestReceivedCallbacks = this.friendRequestReceivedCallbacks.filter(c => c !== callback); }
 
@@ -152,6 +159,8 @@ class ChatService {
   public onGroupAdded(callback: (convId: string) => void) { this.groupAddedCallbacks.push(callback); }
   public offGroupAdded(callback: (convId: string) => void) { this.groupAddedCallbacks = this.groupAddedCallbacks.filter(c => c !== callback); }
 
+=======
+>>>>>>> 776a671ba98a0f6128fc16be630f40bec2eaed64
   public stopConnection() {
     if (this.connection) {
       this.connection.stop();

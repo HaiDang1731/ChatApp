@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
+
 using Microsoft.AspNetCore.SignalR;
 using ChatAPI.Hubs;
+
 
 namespace ChatAPI.Controllers
 {
@@ -18,17 +20,24 @@ namespace ChatAPI.Controllers
         private readonly IUserRepository _userRepo;
         private readonly IConversationRepository _convRepo;
         private readonly IMessageRepository _messageRepo;
+
         private readonly IFriendshipService _friendshipService;
         private readonly IHubContext<ChatHub> _hubContext;
 
         public ChatController(IChatService chatService, IUserRepository userRepo, IConversationRepository convRepo, IMessageRepository messageRepo, IFriendshipService friendshipService, IHubContext<ChatHub> hubContext)
+
+
+        public ChatController(IChatService chatService, IUserRepository userRepo, IConversationRepository convRepo, IMessageRepository messageRepo)
+
         {
             _chatService = chatService;
             _userRepo = userRepo;
             _convRepo = convRepo;
             _messageRepo = messageRepo;
+
             _friendshipService = friendshipService;
             _hubContext = hubContext;
+
         }
 
         [HttpGet("conversations")]
@@ -86,6 +95,8 @@ namespace ChatAPI.Controllers
                             TargetDisplayName = otherUser.DisplayName,
                             TargetUsername = otherUser.Username,
                             TargetAvatarUrl = otherUser.AvatarUrl,
+
+
                             IsTargetOnline = otherUser.IsOnline,
                             MemberCount = 2,
                             LastMessageId = conv.LastMessageId,
@@ -122,7 +133,9 @@ namespace ChatAPI.Controllers
                 Id = u.Id,
                 Username = u.Username,
                 DisplayName = u.DisplayName,
+
                 AvatarUrl = u.AvatarUrl,
+
                 IsOnline = u.IsOnline
             });
 
@@ -135,12 +148,14 @@ namespace ChatAPI.Controllers
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (currentUserId == null) return Unauthorized();
 
+
             // Ràng buộc: Chỉ bạn bè mới có thể bắt đầu hội thoại direct
             var isFriend = await _friendshipService.IsFriendWithAsync(currentUserId, targetUserId);
             if (!isFriend)
             {
                 return BadRequest(new { message = "You can only message your friends." });
             }
+
 
             var conv = await _convRepo.GetDirectConversationAsync(currentUserId, targetUserId);
             if (conv == null)
@@ -169,7 +184,9 @@ namespace ChatAPI.Controllers
                 TargetDisplayName = g.Name ?? "Group Chat",
                 MemberCount = g.Members.Count,
                 LastMessageId = g.LastMessageId,
+
                 AdminId = g.AdminId,
+
                 UpdatedAt = g.UpdatedAt
             });
 
@@ -190,12 +207,15 @@ namespace ChatAPI.Controllers
                 Type = "group",
                 Name = dto.Name,
                 Members = members,
+
                 AdminId = userId,
+
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             };
 
             await _convRepo.InsertAsync(conv);
+
 
             foreach (var memberId in members)
             {
@@ -255,5 +275,9 @@ namespace ChatAPI.Controllers
 
             return Ok(new { message = "Members added successfully." });
         }
+
+            return Ok(conv);
+        }
+
     }
 }

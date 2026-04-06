@@ -29,12 +29,18 @@ builder.Services.AddSingleton<MongoDbContext>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<IConversationRepository, ConversationRepository>();
+<<<<<<< HEAD
 builder.Services.AddScoped<IFriendshipRepository, FriendshipRepository>();
+=======
+>>>>>>> 776a671ba98a0f6128fc16be630f40bec2eaed64
 
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IChatService, ChatService>();
+<<<<<<< HEAD
 builder.Services.AddScoped<IFriendshipService, FriendshipService>();
+=======
+>>>>>>> 776a671ba98a0f6128fc16be630f40bec2eaed64
 
 
 // Configure authentication
@@ -80,7 +86,11 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", policy =>
     {
+<<<<<<< HEAD
         policy.WithOrigins("http://localhost:5173") 
+=======
+        policy.WithOrigins("http://localhost:5173") // Vite default port
+>>>>>>> 776a671ba98a0f6128fc16be630f40bec2eaed64
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();

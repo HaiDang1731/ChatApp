@@ -11,7 +11,10 @@ namespace ChatCore.Entities
 
         public string Type { get; set; } = "direct"; // direct, group
         public string? Name { get; set; }
+<<<<<<< HEAD
         public string? AdminId { get; set; } // The creator/admin of the group
+=======
+>>>>>>> 776a671ba98a0f6128fc16be630f40bec2eaed64
         public List<string> Members { get; set; } = new();
 
         [BsonRepresentation(BsonType.ObjectId)]

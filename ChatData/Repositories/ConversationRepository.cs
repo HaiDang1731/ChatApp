@@ -66,10 +66,13 @@ namespace ChatData.Repositories
 
             return await _conversations.Find(filter).Limit(20).ToListAsync();
         }
+<<<<<<< HEAD
 
         public async Task UpdateAsync(Conversation conversation)
         {
             await _conversations.ReplaceOneAsync(c => c.Id == conversation.Id, conversation);
         }
+=======
+>>>>>>> 776a671ba98a0f6128fc16be630f40bec2eaed64
     }
 }

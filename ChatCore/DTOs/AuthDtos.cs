@@ -18,6 +18,9 @@ namespace ChatCore.DTOs
         public string Token { get; set; } = null!;
         public string UserId { get; set; } = null!;
         public string DisplayName { get; set; } = null!;
+<<<<<<< HEAD
         public string? AvatarUrl { get; set; }
+=======
+>>>>>>> 776a671ba98a0f6128fc16be630f40bec2eaed64
     }
 }

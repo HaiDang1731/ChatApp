@@ -41,7 +41,10 @@ namespace ChatCore.DTOs
         public string? LastMessageId { get; set; }
         public string? LastMessageContent { get; set; }
         public int UnreadCount { get; set; }
+<<<<<<< HEAD
         public string? AdminId { get; set; }
+=======
+>>>>>>> 776a671ba98a0f6128fc16be630f40bec2eaed64
         public DateTime UpdatedAt { get; set; }
     }
 
@@ -60,11 +63,14 @@ namespace ChatCore.DTOs
         public List<string> UserIds { get; set; } = new();
     }
 
+<<<<<<< HEAD
     public class AddGroupMembersDto
     {
         public List<string> UserIds { get; set; } = new();
     }
 
+=======
+>>>>>>> 776a671ba98a0f6128fc16be630f40bec2eaed64
     public class ProfileUpdateDto
     {
         public string DisplayName { get; set; } = string.Empty;
