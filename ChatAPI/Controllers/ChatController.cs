@@ -197,7 +197,6 @@ namespace ChatAPI.Controllers
 
             await _convRepo.InsertAsync(conv);
 
-            // Notify all members about the new group
             foreach (var memberId in members)
             {
                 await _hubContext.Clients.Group(memberId).SendAsync("GroupAdded", conv.Id);
