@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { chatService } from '../signalr/ChatConnection';
+import { API_BASE_URL } from '../config';
 
 type UserView = {
   id: string;
@@ -109,7 +110,7 @@ const ChatWorkspace = () => {
   useEffect(() => {
     const fetchMe = async () => {
       try {
-        const res = await fetch('http://localhost:5281/api/auth/me', {
+        const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (res.ok) {
@@ -264,7 +265,7 @@ const ChatWorkspace = () => {
 
   const fetchConversations = async () => {
     try {
-      const res = await fetch('http://localhost:5281/api/chat/conversations', {
+      const res = await fetch(`${API_BASE_URL}/api/chat/conversations`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -277,7 +278,7 @@ const ChatWorkspace = () => {
 
   const searchUsers = async (q: string) => {
     try {
-      const res = await fetch(`http://localhost:5281/api/chat/users/search?q=${encodeURIComponent(q)}`, {
+      const res = await fetch(`${API_BASE_URL}/api/chat/users/search?q=${encodeURIComponent(q)}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -290,7 +291,7 @@ const ChatWorkspace = () => {
 
   const searchGroups = async (q: string) => {
     try {
-      const res = await fetch(`http://localhost:5281/api/chat/groups/search?q=${encodeURIComponent(q)}`, {
+      const res = await fetch(`${API_BASE_URL}/api/chat/groups/search?q=${encodeURIComponent(q)}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -303,7 +304,7 @@ const ChatWorkspace = () => {
 
   const fetchFriends = async () => {
     try {
-      const res = await fetch('http://localhost:5281/api/friendship/friends', {
+      const res = await fetch(`${API_BASE_URL}/api/friendship/friends`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) setFriends(await res.json());
@@ -314,7 +315,7 @@ const ChatWorkspace = () => {
 
   const fetchPendingRequests = async () => {
     try {
-      const res = await fetch('http://localhost:5281/api/friendship/pending', {
+      const res = await fetch(`${API_BASE_URL}/api/friendship/pending`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) setPendingRequests(await res.json());
@@ -325,7 +326,7 @@ const ChatWorkspace = () => {
 
   const sendFriendRequest = async (receiverId: string) => {
     try {
-      const res = await fetch(`http://localhost:5281/api/friendship/request/${receiverId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/friendship/request/${receiverId}`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -343,7 +344,7 @@ const ChatWorkspace = () => {
 
   const acceptFriendRequest = async (requesterId: string) => {
     try {
-      const res = await fetch(`http://localhost:5281/api/friendship/accept/${requesterId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/friendship/accept/${requesterId}`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -358,7 +359,7 @@ const ChatWorkspace = () => {
 
   const declineFriendRequest = async (requesterId: string) => {
     try {
-      const res = await fetch(`http://localhost:5281/api/friendship/decline/${requesterId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/friendship/decline/${requesterId}`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -371,7 +372,7 @@ const ChatWorkspace = () => {
   const removeFriend = async (friendId: string) => {
     if (!confirm("Bạn có chắc chắn muốn xóa bạn bè?")) return;
     try {
-      const res = await fetch(`http://localhost:5281/api/friendship/${friendId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/friendship/${friendId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -383,7 +384,7 @@ const ChatWorkspace = () => {
 
   const startChatWithUser = async (targetUser: UserView) => {
     try {
-      const res = await fetch(`http://localhost:5281/api/chat/conversation/direct/${targetUser.id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/chat/conversation/direct/${targetUser.id}`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -418,7 +419,7 @@ const ChatWorkspace = () => {
   const createGroup = async () => {
     if (!groupName.trim() || selectedUsers.length === 0) return;
     try {
-      const res = await fetch('http://localhost:5281/api/chat/conversation/group', {
+      const res = await fetch(`${API_BASE_URL}/api/chat/conversation/group`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -456,7 +457,7 @@ const ChatWorkspace = () => {
   const handleUpdateProfile = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5281/api/auth/profile', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/profile`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -484,14 +485,14 @@ const ChatWorkspace = () => {
     formData.append('files', file);
 
     try {
-      const res = await fetch('http://localhost:5281/api/upload', {
+      const res = await fetch(`${API_BASE_URL}/api/upload`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
       });
       if (res.ok) {
         const data = await res.json();
-        setProfileAvatarUrl(`http://localhost:5281${data[0].url}`);
+        setProfileAvatarUrl(`${API_BASE_URL}${data[0].url}`);
       }
     } catch (err) {
       console.error(err);
@@ -509,7 +510,7 @@ const ChatWorkspace = () => {
 
   const fetchGroupMembers = async (convId: string) => {
     try {
-      const res = await fetch(`http://localhost:5281/api/chat/conversation/${convId}/members`, {
+      const res = await fetch(`${API_BASE_URL}/api/chat/conversation/${convId}/members`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) setGroupMembers(await res.json());
@@ -528,7 +529,7 @@ const ChatWorkspace = () => {
   const handleAddMembers = async () => {
     if (!activeConversationId || memberIdsToAdd.length === 0) return;
     try {
-      const res = await fetch(`http://localhost:5281/api/chat/conversation/${activeConversationId}/members`, {
+      const res = await fetch(`${API_BASE_URL}/api/chat/conversation/${activeConversationId}/members`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -551,7 +552,7 @@ const ChatWorkspace = () => {
 
   const fetchMessages = async (convId: string) => {
     try {
-      const res = await fetch(`http://localhost:5281/api/chat/messages/${convId}?limit=50`, {
+      const res = await fetch(`${API_BASE_URL}/api/chat/messages/${convId}?limit=50`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -593,7 +594,7 @@ const ChatWorkspace = () => {
     }
 
     try {
-      const res = await fetch('http://localhost:5281/api/upload', {
+      const res = await fetch(`${API_BASE_URL}/api/upload`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
@@ -606,7 +607,7 @@ const ChatWorkspace = () => {
 
         const attachments = results.map((a: any) => ({
           ...a,
-          url: `http://localhost:5281${a.url}`
+          url: `${API_BASE_URL}${a.url}`
         }));
 
         chatService.sendMessage(activeConversationId, "sent attachments", type, attachments);
