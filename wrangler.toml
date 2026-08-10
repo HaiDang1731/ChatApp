@@ -5,4 +5,4 @@ compatibility_date = "2026-08-10"
 bucket = "./ChatWeb/dist"
 
 [build]
-command = "npm run build --prefix ChatWeb"
+command = "npm --prefix ChatWeb install && npm --prefix ChatWeb run build"
