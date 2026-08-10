@@ -20,11 +20,29 @@ builder.Services.AddEndpointsApiExplorer();
 // Configure Settings
 var jwtSettings = new JwtSettings();
 builder.Configuration.GetSection("JwtSettings").Bind(jwtSettings);
+if (string.IsNullOrEmpty(jwtSettings.SecretKey))
+{
+    jwtSettings.SecretKey = builder.Configuration["JwtSettings__SecretKey"] ?? "SuperSecretKeyForChatAppNeedsToBeLongEnough";
+    jwtSettings.Issuer = builder.Configuration["JwtSettings__Issuer"] ?? "ChatAppAPI";
+    jwtSettings.Audience = builder.Configuration["JwtSettings__Audience"] ?? "ChatAppClient";
+}
 builder.Services.AddSingleton(jwtSettings);
 
-builder.Services.Configure<MongoDbSettings>(
-    builder.Configuration.GetSection("MongoDbSettings")
-);
+var mongoConnStr = builder.Configuration["MongoDbSettings:ConnectionString"] 
+    ?? builder.Configuration["MongoDbSettings__ConnectionString"] 
+    ?? builder.Configuration["MONGODB_CONNECTION_STRING"]
+    ?? "mongodb://localhost:27017";
+
+var mongoDbName = builder.Configuration["MongoDbSettings:DatabaseName"] 
+    ?? builder.Configuration["MongoDbSettings__DatabaseName"] 
+    ?? builder.Configuration["MONGODB_DATABASE_NAME"]
+    ?? "ChatDb";
+
+builder.Services.Configure<MongoDbSettings>(options =>
+{
+    options.ConnectionString = mongoConnStr;
+    options.DatabaseName = mongoDbName;
+});
 
 // Configure DI
 builder.Services.AddSingleton<MongoDbContext>();
