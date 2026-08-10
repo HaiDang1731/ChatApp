@@ -16,13 +16,22 @@ FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
 
-# Optimize .NET runtime for low-memory containers (Render 512MB RAM limit)
-# Disabling Server GC (using Workstation GC) drastically lowers RAM usage and prevents SIGSEGV (Exit status 139)
-ENV DOTNET_System_GC_Server=false \
+# Optimize .NET 9 runtime for low-memory containers & Linux inotify file descriptor limits (Render 512MB RAM limit)
+# DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE=false: Prevents inotify limit 128 crash (System.IO.IOException)
+# DOTNET_gcServer=0: Workstation GC (consumes ~50-80MB RAM vs 350MB+)
+# DOTNET_GCHeapHardLimit=1C000000: Cap GC heap at 448MB (0x1C000000 bytes)
+ENV DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE=false \
+    ASPNETCORE_HOSTBUILDER__RELOADCONFIGONCHANGE=false \
+    DOTNET_USE_POLLING_FILE_WATCHER=true \
+    DOTNET_gcServer=0 \
+    DOTNET_System_GC_Server=0 \
+    DOTNET_GCHeapHardLimit=1C000000 \
     DOTNET_EnableDiagnostics=0 \
     PORT=10000
 
 EXPOSE 10000
 
 CMD ["dotnet", "ChatAPI.dll"]
+
+
 

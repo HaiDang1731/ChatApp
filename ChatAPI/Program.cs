@@ -9,8 +9,19 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Disable reloadOnChange to prevent Linux inotify file handle limit (128) crashes on Render
+builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
+{
+    foreach (var source in config.Sources.OfType<Microsoft.Extensions.Configuration.FileConfigurationSource>())
+    {
+        source.ReloadOnChange = false;
+    }
+});
+
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5281";
 builder.WebHost.UseUrls($"http://*:{port}");
+
 
 // Add services to the container.
 builder.Services.AddControllers();
