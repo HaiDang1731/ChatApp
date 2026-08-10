@@ -25,10 +25,6 @@ namespace ChatAPI.Controllers
         private readonly IHubContext<ChatHub> _hubContext;
 
         public ChatController(IChatService chatService, IUserRepository userRepo, IConversationRepository convRepo, IMessageRepository messageRepo, IFriendshipService friendshipService, IHubContext<ChatHub> hubContext)
-
-
-        public ChatController(IChatService chatService, IUserRepository userRepo, IConversationRepository convRepo, IMessageRepository messageRepo)
-
         {
             _chatService = chatService;
             _userRepo = userRepo;
@@ -275,9 +271,5 @@ namespace ChatAPI.Controllers
 
             return Ok(new { message = "Members added successfully." });
         }
-
-            return Ok(conv);
-        }
-
     }
 }

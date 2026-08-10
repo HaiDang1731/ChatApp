@@ -41,12 +41,8 @@ namespace ChatCore.Services
             {
                 Token = token,
                 UserId = user.Id,
-<<<<<<< HEAD
                 DisplayName = user.DisplayName,
                 AvatarUrl = user.AvatarUrl
-=======
-                DisplayName = user.DisplayName
->>>>>>> 776a671ba98a0f6128fc16be630f40bec2eaed64
             };
         }
 
@@ -61,12 +57,8 @@ namespace ChatCore.Services
             {
                 Token = token,
                 UserId = user.Id,
-<<<<<<< HEAD
                 DisplayName = user.DisplayName,
                 AvatarUrl = user.AvatarUrl
-=======
-                DisplayName = user.DisplayName
->>>>>>> 776a671ba98a0f6128fc16be630f40bec2eaed64
             };
         }
 

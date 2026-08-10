@@ -78,7 +78,9 @@ builder.Services.AddAuthentication(options =>
 // Add SignalR
 builder.Services.AddSignalR();
 // Add CORS for React Frontend
-var allowedOriginsStr = builder.Configuration["CorsSettings:AllowedOrigins"] ?? "http://localhost:5173";
+var allowedOriginsStr = builder.Configuration["ALLOWED_ORIGINS"] 
+    ?? builder.Configuration["CorsSettings:AllowedOrigins"] 
+    ?? "http://localhost:5173";
 var allowedOrigins = allowedOriginsStr.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
 builder.Services.AddCors(options =>
