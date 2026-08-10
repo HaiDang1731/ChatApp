@@ -1,8 +1,7 @@
 name = "chatapp"
 compatibility_date = "2026-08-10"
 
-[site]
-bucket = "./ChatWeb/dist"
+assets = { directory = "./ChatWeb/dist" }
 
 [build]
 command = "npm --prefix ChatWeb install && npm --prefix ChatWeb run build"
