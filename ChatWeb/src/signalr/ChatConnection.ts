@@ -1,4 +1,5 @@
 import * as signalR from "@microsoft/signalr";
+import { API_BASE_URL } from "../config";
 
 class ChatService {
   private connection: signalR.HubConnection | null = null;
@@ -20,7 +21,7 @@ class ChatService {
     if (this.connection) return;
 
     this.connection = new signalR.HubConnectionBuilder()
-      .withUrl("http://localhost:5281/chatHub", {
+      .withUrl(`${API_BASE_URL}/chatHub`, {
         accessTokenFactory: () => token
       })
       .withAutomaticReconnect()
