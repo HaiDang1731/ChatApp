@@ -26,11 +26,7 @@ const Login = () => {
       }
 
       const data = await res.json();
-<<<<<<< HEAD
       login(data.token, { id: data.userId, username, displayName: data.displayName, avatarUrl: data.avatarUrl });
-=======
-      login(data.token, { id: data.userId, username, displayName: data.displayName });
->>>>>>> 776a671ba98a0f6128fc16be630f40bec2eaed64
       navigate('/');
     } catch (err: any) {
       setError(err.message);
