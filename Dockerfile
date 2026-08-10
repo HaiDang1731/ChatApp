@@ -16,7 +16,13 @@ FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
 
-ENV PORT=10000
+# Optimize .NET runtime for low-memory containers (Render 512MB RAM limit)
+# Disabling Server GC (using Workstation GC) drastically lowers RAM usage and prevents SIGSEGV (Exit status 139)
+ENV DOTNET_System_GC_Server=false \
+    DOTNET_EnableDiagnostics=0 \
+    PORT=10000
+
 EXPOSE 10000
 
 CMD ["dotnet", "ChatAPI.dll"]
+
