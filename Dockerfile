@@ -21,4 +21,7 @@ COPY --from=build /app/publish .
 ENV PORT=10000
 EXPOSE 10000
 
+ENV DOTNET_gcServer=0
+ENV DOTNET_GCConserveMemory=9
+
 ENTRYPOINT ["dotnet", "ChatAPI.dll"]
